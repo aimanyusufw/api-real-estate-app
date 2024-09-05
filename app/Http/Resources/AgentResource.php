@@ -26,7 +26,11 @@ class AgentResource extends JsonResource
             'total_property' => $this->total_property,
             'total_sold_property' => $this->total_sold_property,
             'price_range_property' => $this->price_range_property,
-            'joined_date' => $this->joined_date,
+            'joined_date' => [
+                "date" => $this->joined_date,
+                "string" => $this->joined_date->diffForHumans(),
+                "year" => date("Y", strtotime($this->joined_date))
+            ],
         ];
     }
 }

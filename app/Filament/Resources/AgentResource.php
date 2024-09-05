@@ -57,20 +57,33 @@ class AgentResource extends Resource
                         ->email()
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\DatePicker::make('joined_date')
-                        ->default(now())
-                        ->required(),
-                    Forms\Components\Repeater::make('social_media_links')
-                        ->schema([
-                            Forms\Components\TextInput::make('platform')
-                                ->required(),
-                            Forms\Components\TextInput::make('url')
-                                ->required(),
-                        ]),
+                    Forms\Components\TextInput::make('social_media_links.instagram')
+                        ->label("Instagram")
+                        ->url()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('social_media_links.facebook')
+                        ->label("Facebook")
+                        ->url()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('social_media_links.twitter')
+                        ->label("X/Twitter")
+                        ->url()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('social_media_links.linkedin')
+                        ->label("Linkedin")
+                        ->url()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('social_media_links.tiktok')
+                        ->label("Tiktok")
+                        ->url()
+                        ->maxLength(255),
                 ])
                     ->columns(["md" => 2])
                     ->columnSpan(2),
                 Forms\Components\Section::make([
+                    Forms\Components\DatePicker::make('joined_date')
+                        ->default(now())
+                        ->required(),
                     Forms\Components\Placeholder::make("created at")
                         ->content(fn(?Agent $record) => $record ? $record->created_at->diffForHumans() : "-"),
                     Forms\Components\Placeholder::make("updated at")

@@ -39,7 +39,10 @@ class PropertyResource extends JsonResource
                     'slug' => $typeSale->slug,
                 ];
             }),
-            'price' => 'Rp ' . number_format($this->price, 0, ',', '.'),
+            'price' => [
+                "string" => 'Rp ' . number_format($this->price, 0, ',', '.'),
+                "int" => $this->price
+            ],
             'short_description' => $this->short_description,
             'description_title' => $this->description_title,
             'specification' => $this->specification,

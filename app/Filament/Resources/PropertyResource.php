@@ -89,22 +89,26 @@ class PropertyResource extends Resource
                                 ->required(),
                             Forms\Components\TextInput::make('specification.land_area')
                                 ->prefix("🎍")
+                                ->suffix("m²")
                                 ->label('Land Area')
                                 ->required(),
                             Forms\Components\TextInput::make('specification.building_area')
                                 ->prefix("🏨")
+                                ->suffix("m²")
                                 ->label('Building Area')
                                 ->required(),
                             Forms\Components\TextInput::make('specification.electricity')
                                 ->prefix("⚡")
                                 ->label('Electricity')
+                                ->suffix("volt")
                                 ->required(),
                             Forms\Components\TextInput::make('specification.rent_period')
                                 ->prefix("🔃")
+                                ->suffix("month")
                                 ->label('Rent Period')
                                 ->required(),
                             Forms\Components\TextInput::make('specification.price_per_m2')
-                                ->prefix("⚡")
+                                ->prefix("Rp")
                                 ->label('Price m2')
                                 ->required(),
                             Forms\Components\CheckboxList::make('typeSales')
@@ -118,7 +122,7 @@ class PropertyResource extends Resource
                                     "SHM" => 'SHM',
                                     "SHB" => 'SHB',
                                     "AJB" => 'AJB',
-                                    "SHSRS`" => 'SHSRS',
+                                    "SHSRS" => 'SHSRS',
                                 ])
                                 ->required()
                         ]),
@@ -127,11 +131,11 @@ class PropertyResource extends Resource
                             Forms\Components\FileUpload::make('thumbnail')
                                 ->image()
                                 ->columnSpanFull()
-                                ->maxSize(5120)
+                                ->maxSize(10240)
                                 ->disk('public')
                                 ->directory('property')
                                 ->imageEditor()
-                                ->imageCropAspectRatio('16:9')
+                                ->imageCropAspectRatio('16:10')
                                 ->required(),
                             Forms\Components\Repeater::make('galleries')
                                 ->schema([

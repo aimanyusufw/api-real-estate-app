@@ -38,6 +38,7 @@ class Agent extends Model
         });
     }
 
+
     /**
      * Set the primary key type to UUID.
      */
@@ -46,7 +47,8 @@ class Agent extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        "social_media_links" => "json"
+        "social_media_links" => "json",
+        'joined_date' => 'date',
     ];
 
     public function getRouteKeyName()
