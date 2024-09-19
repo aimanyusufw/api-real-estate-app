@@ -22,7 +22,10 @@ class PropertyResource extends JsonResource
             'slug' => $this->slug,
             'agent' => [
                 'id' => $this->agent->id,
-                'name' => $this->agent->name
+                'name' => $this->agent->name,
+                'profile_picture' => asset(Storage::url($this->agent->profile_picture)),
+                'email' => $this->agent->email,
+                'phone' => $this->agent->phone,
             ],
             'thumbnail' => $this->thumbnail_url,
             'location' => [

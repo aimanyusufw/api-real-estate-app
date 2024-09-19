@@ -62,7 +62,6 @@ class PropertyResource extends Resource
                                 ->required()
                                 ->numeric()
                                 ->prefix('Rp'),
-
                             Forms\Components\RichEditor::make('description')
                                 ->required()
                                 ->columnSpanFull(),
