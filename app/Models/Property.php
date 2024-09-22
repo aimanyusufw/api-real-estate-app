@@ -26,6 +26,15 @@ class Property extends Model
         "thumbnail_url"
     ];
 
+    public function relatedProperties()
+    {
+        return Property::with('agent', 'location', 'type', 'typeSales')
+            ->where('property_id', '!=', $this->property_id)
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
+    }
+
 
     public function thumbnailUrl(): Attribute
     {

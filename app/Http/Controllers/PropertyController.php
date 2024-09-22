@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PropertyCollection;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Resources\PropertyResource;
@@ -18,7 +19,7 @@ class PropertyController extends Controller
         $bedroom = request('bedroom');
         $agent = request('agent_id');
 
-        $data = Property::with('agent', 'location', 'type', 'typeSales')
+        $data = Property::with('location', 'type', 'typeSales')
             ->latest()
             ->when($query, function ($q) use ($query) {
                 $q->where(function ($q) use ($query) {
@@ -57,7 +58,7 @@ class PropertyController extends Controller
             })
             ->paginate($dataPerPage);
 
-        return PropertyResource::collection($data);
+        return new PropertyCollection($data);
     }
 
 
