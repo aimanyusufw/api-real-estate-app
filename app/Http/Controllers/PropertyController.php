@@ -6,11 +6,23 @@ use App\Http\Resources\PropertyCollection;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Resources\PropertyResource;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PropertyController extends Controller
 {
     public function index()
     {
+        request()->validate([
+            'limit' => 'integer|min:1|max:100',
+            'location' => 'nullable|string',
+            'query' => 'nullable|string',
+            'type' => 'nullable|string',
+            'type_sale' => 'nullable|string',
+            'bedroom' => 'nullable|integer',
+            'agent_id' => 'nullable|integer',
+        ]);
+
+
         $dataPerPage = request('limit', 10);
         $location = request('location');
         $query = request('query');
@@ -18,6 +30,7 @@ class PropertyController extends Controller
         $typeSale = request('type_sale');
         $bedroom = request('bedroom');
         $agent = request('agent_id');
+
 
         $data = Property::with('location', 'type', 'typeSales')
             ->latest()
@@ -45,7 +58,7 @@ class PropertyController extends Controller
             })
             ->when($agent, function ($q) use ($agent) {
                 $q->whereHas('agent', function ($typeQuery) use ($agent) {
-                    $typeQuery->where('id', 'LIKE', "%{$agent}%");
+                    $typeQuery->where('id', $agent);
                 });
             })
             ->when($typeSale, function ($query) use ($typeSale) {
@@ -57,6 +70,16 @@ class PropertyController extends Controller
                 $query->whereJsonContains('specification->bedroom', $bedroom);
             })
             ->paginate($dataPerPage);
+
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'isError' => 'ture',
+                'statusCode' => 404,
+                'message' => 'Data not found',
+            ], 404);
+        }
+
 
         return new PropertyCollection($data);
     }

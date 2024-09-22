@@ -26,6 +26,11 @@ class PropertyResource extends JsonResource
                 'profile_picture' => $this->agent->profile_picture ? asset(Storage::url($this->agent->profile_picture)) : null,
                 'email' => $this->agent->email,
                 'phone' => $this->agent->phone,
+                'joined_date' => [
+                    "date" => $this->agent->joined_date,
+                    "string" => $this->agent->joined_date->diffForHumans(),
+                    "year" => date("Y", strtotime($this->agent->joined_date))
+                ],
             ] : null,
             'thumbnail' => $this->thumbnail_url,
             'location' => $this->location ? [
