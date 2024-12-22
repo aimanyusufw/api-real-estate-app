@@ -7,6 +7,7 @@ use App\Models\Property;
 use App\Models\PropertyLocation;
 use App\Models\PropertyTypes;
 use App\Models\PropertyTypeSale;
+use App\Models\User;
 use Illuminate\Support\Str;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,6 +19,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::create([
+            "name" => "Admin",
+            "email" => "admin@admin.com",
+            "password" => bcrypt("admin")
+        ]);
+        
         Agent::factory(10)->create();
 
         // Property locations seeder
